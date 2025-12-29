@@ -1,0 +1,31 @@
+name: testing master
+on:
+ push:
+   branches: ['main', 'dev']
+jobs:
+ build:
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/dev'
+
+  steps:
+  - uses: actions/checkout@v3
+  - name:  building
+    run: echo "BUILD"
+  
+ test:
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/dev'
+  needs: build
+  steps:
+  - uses: actions/checkout@v3
+  - name: testing
+    run: echo "test"
+   
+ package:
+   runs-on: ubuntu-latest
+   if: github.ref == 'refs/heads/main'
+   steps:
+   - uses: actions/checkout@v3
+   - name: packaging
+     run: echo "PACKAGE"
+   
